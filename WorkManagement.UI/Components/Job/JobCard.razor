@@ -1,0 +1,38 @@
+﻿@using WorkManagement.UI.Model
+
+<div class="container py-1">
+    <h5 class="card-title">Monday 11.03</h5>
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="vertical-divider"></div>
+                <div class="card-buttons btn-group">
+                    <button type="button" class="btn btn-success">Start</button>
+                    <NavLink class="btn btn-primary" href="@($"jobdetails/{jobOrder.Id}")">Info</NavLink>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="flex-grow-1">
+                    <p class="card-text mb-0"><strong>Car:</strong> @jobOrder.VehicleBrand</p>
+                    <p class="card-text mb-0"><strong>Cost centar:</strong> @jobOrder.Location</p>
+                    <p class="card-text mb-0"><strong>Location:</strong> @jobOrder.JobLocation</p>
+                </div>
+                <div class="flex-grow-1">
+                    <p class="card-text mb-0"><strong>Servicer:</strong> @jobOrder.AssignedUser</p>
+                    <p class="card-text mb-0"><strong>Work type:</strong> @jobOrder.JobServiceType</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public JobOrder jobOrder { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine(jobOrder.VehicleBrand + " initialized");
+    }
+}
