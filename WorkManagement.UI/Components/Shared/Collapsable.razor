@@ -1,0 +1,31 @@
+﻿<button class="btn btn-link" @onclick="ToggleCollapse">
+    @if (isCollapsed)
+    {
+        <span>Show More</span>
+    }
+    else
+    {
+        <span>Show Less</span>
+    }
+</button>
+
+<div class="@GetCollapseClass()">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private bool isCollapsed = false;
+
+    private void ToggleCollapse()
+    {
+        isCollapsed = !isCollapsed;
+    }
+
+    private string GetCollapseClass()
+    {
+        return isCollapsed ? "collapse" : "collapse show";
+    }
+}

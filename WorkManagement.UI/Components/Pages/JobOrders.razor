@@ -1,0 +1,61 @@
+﻿@page "/joborders"
+@using WorkManagement.UI.Data
+@using WorkManagement.UI.Model
+@using WorkManagement.UI.Components
+@using WorkManagement.UI.Components.Shared
+@inject JobOrderService JobOrderService
+@rendermode InteractiveServer
+
+
+@if (jobOrders == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="job-orders-container">
+        <div class="job-orders-panel">
+            <h4>Open</h4>
+            <Collapsable>
+                @foreach (var jobOrder in jobOrders.Where(jo => jo.Status == "Open"))
+                {
+                    <p>@jobOrder.JobLocation - @jobOrder.VehicleBrand @jobOrder.VehicleType</p>
+                }
+            </Collapsable>
+        </div>
+        <div class="job-orders-panel">
+            <h4>In Progress</h4>
+            <Collapsable>
+                @foreach (var jobOrder in jobOrders.Where(jo => jo.Status == "In progress"))
+                {
+                    <p>@jobOrder.JobLocation - @jobOrder.VehicleBrand @jobOrder.VehicleType</p>
+                }
+            </Collapsable>
+        </div>
+        <div class="job-orders-panel">
+            <h4>Done</h4>
+            <Collapsable>
+                @foreach (var jobOrder in jobOrders.Where(jo => jo.Status == "Done"))
+                {
+                    <WorkManagement.UI.Components.Job.JobCard jobOrder="jobOrder" />
+                }
+            </Collapsable>
+        </div>
+    </div>
+}
+
+@code {
+    private List<JobOrder> jobOrders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        jobOrders = await JobOrderService.GetJobOrdersAsync();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // The page is now interactive. You can invoke JavaScript here if needed.
+        }
+    }
+}
